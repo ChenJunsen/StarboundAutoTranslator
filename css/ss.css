@@ -1,0 +1,11 @@
+.file_selector{
+    border: 2px black;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: aquamarine;
+}
+
+.bg{
+    width: 100vw;
+}

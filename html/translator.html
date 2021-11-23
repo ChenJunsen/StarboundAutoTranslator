@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>屎大棒文本自动翻译机</title>
+    <script type="text/javascript" src="../js/fileReader.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/ss.css">
+    <style>
+        *{
+            padding: 10px;
+            margin: 0px;
+            background: url("../asset/sb.jpg");
+        }
+    </style>
+</head>
+<body>
+<div>
+    <input type="file" onchange="read(this,onGetFile)" class="file_selector"/>
+    <script>
+        function onGetFile(jsonObj){
+            console.log(jsonObj)
+        }
+    </script>
+</div>
+</body>
+</html>
