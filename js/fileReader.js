@@ -3,40 +3,46 @@
  * @param input
  * @param callback
  */
-function read(input, callback) {
+function readFile(input, callback) {
+    let fileName='翻译的文件.json'
+    let original=null
     //支持chrome IE10
     if (window.FileReader) {
-        var file = input.files[0];
-        filename = file.name.split(".")[0];
-        var reader = new FileReader();
+        const file = input.files[0];
+        console.log(file)
+        fileName = file.name;
+        const reader = new FileReader();
         reader.onload = function () {
             console.log(this.result);
+            original=toJSON(this.result);
             if (typeof callback === 'function') {
-                callback(toJSON(this.result));
+                callback(original,fileName);
             }
         }
         reader.readAsText(file);
     }
     //支持IE 7 8 9 10
     else if (typeof window.ActiveXObject != 'undefined') {
-        var xmlDoc;
+        let xmlDoc;
         xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
         xmlDoc.async = false;
         xmlDoc.load(input.value);
         console.log(xmlDoc.xml);
+        original=toJSON(xmlDoc.xml);
         if (typeof callback === 'function') {
-            callback(toJSON(xmlDoc.xml));
+            callback(original,fileName);
         }
     }
     //支持FF
     else if (document.implementation && document.implementation.createDocument) {
-        var xmlDoc;
+        let xmlDoc;
         xmlDoc = document.implementation.createDocument("", "", null);
         xmlDoc.async = false;
         xmlDoc.load(input.value);
         console.log(xmlDoc.xml);
+        original=toJSON(xmlDoc.xml);
         if (typeof callback === 'function') {
-            callback(toJSON(xmlDoc.xml));
+            callback(original,fileName);
         }
     } else {
         alert('error');
@@ -50,7 +56,7 @@ function read(input, callback) {
  */
 function toJSON(result) {
     if (result) {
-        var obj = null;
+        let obj = null;
         try {
             obj = JSON.parse(result);
         } catch (e) {
@@ -64,6 +70,11 @@ function toJSON(result) {
     }
 }
 
+/**
+ * 判断对象是否是数组
+ * @param value
+ * @returns {arg is any[]|boolean}
+ */
 function isArrayFn(value) {
     if (typeof Array.isArray === "function") {
         return Array.isArray(value);
@@ -72,27 +83,40 @@ function isArrayFn(value) {
     }
 }
 
+/**
+ * 判空
+ * @param s
+ * @returns {boolean}
+ */
 function isEmpty(s) {
     return s === null || s === '' || s === undefined;
 }
-var count=-1;
-var tempArray=[];
+
+/**
+ * 屎大棒文件专用解析,形如:
+ * <pre>
+ *     [
+ *          {
+ *              "Texts":{
+ *                  "Eng":"xxxxxx"
+ *              }
+ *          }
+ *     ]
+ * </pre>
+ * @param json
+ * @returns {{}}
+ */
 function sbScriptParser(json) {
-    if (json != null) {
-        for (var p in json) {
-            if (isArrayFn(p)) {//数组
-                sbScriptParser(p)
-            } else {//普通对象
-                for(var pp in p){
-                    if (!isEmpty(pp['Eng']) && isEmpty(pp['Chs'])) {
-                        count++;
-                        p['Chs']=count+'';
-                        tempArray.push(p['Eng']);
-                    }else{
-                        sbScriptParser(pp);
-                    }
-                }
+    const tempMap = {};
+    if (json != null && isArrayFn(json)) {
+        for (let i = 0; i < json.length; i++) {
+            let p = json[i];
+            if (!isEmpty(p['Texts']) && !isEmpty(p['Texts']['Eng'])) {
+                tempMap[i] = (p['Texts']['Eng'])
             }
         }
+    } else {
+        console.warn("待解析的文件格式不对!")
     }
+    return tempMap;
 }

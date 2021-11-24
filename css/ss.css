@@ -1,11 +1,38 @@
 .file_selector{
-    border: 2px black;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 18px;
     color: aquamarine;
 }
 
-.bg{
-    width: 100vw;
+.container{
+    background: url("../asset/sb.jpg");
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.trans{
+    width: 120px;
+    height: 40px;
+    border:1px #5c5d57 solid;
+    border-radius: 4px;
+    font-size: 16px;
+    background: blueviolet;
+    color: aqua;
+}
+
+.trans:hover{
+    border:1px cornflowerblue solid;
+}
+
+.dp1{
+    color: antiquewhite;
+    font-size: 16px;
+    width: 100%;
+}
+
+.dp2{
+    color: aquamarine;
+    font-size: 16px;
+    width: 100%;
 }
