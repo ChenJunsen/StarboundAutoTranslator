@@ -42,7 +42,9 @@ webstorm可以通过内嵌服务器方式启动，原理懂的都懂:
 这时，我们就可以点击另外一边的**开始翻译**
 ![翻译结果](https://img-blog.csdnimg.cn/31026ee404c340658c07b125330f7e13.jpg)
 页面会显示翻译结果。右侧会提示保存翻译好的文件(edge浏览器)
+**需要注意的是，机翻的准确度不是100%，翻译完一个文件后，需要手动校验一下。**
 至此，使用教程就结束了。
+另外，星界边境的大型MOD-[富兰克林宇宙汉化项目](https://github.com/ProjectSky/FrackinUniverse-sChinese-Project)已经开源了，欢迎喜欢这个游戏的同学加入汉化
 # 异常说明
 ![翻译异常](https://img-blog.csdnimg.cn/6590cd3e6e85486ea5e52059c5ac66d7.jpg)
 可能会出现如图的异常**52003**，**请确认你配置的appid和key是否有效**
