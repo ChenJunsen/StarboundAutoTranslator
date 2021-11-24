@@ -12,7 +12,7 @@
 </head>
 <body class="container">
 <div>
-    <input type="file" onchange="readFile(this,onGetFile)" class="file_selector"/>
+    <input type="file" onchange="readFile(this,onGetFile)" class="file_selector" accept=".json"/>
     <input type="button" value="开始翻译" onclick="doTranslate()" class="trans"/>
     <div id="display1" class="dp1"></div>
     <div id="display2" class="dp2"></div>
@@ -29,6 +29,7 @@
             originalObj = jsonObj;
             queryMap = sbScriptParser(jsonObj);
             document.getElementById("display1").innerHTML = "<h2>探测到文本:</h2><pre>" + JSON.stringify(queryMap, null, 2) + "</pre>"
+            document.getElementById("display2").innerHTML=''
         }
 
         function doTranslate() {
