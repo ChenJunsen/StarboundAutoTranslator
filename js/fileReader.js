@@ -10,16 +10,7 @@ function readFile(input, callback) {
     if (window.FileReader) {
         const file = input.files[0];
         console.log(file)
-        fileName = file.name;
-        const reader = new FileReader();
-        reader.onload = function () {
-            console.log(this.result);
-            original=toJSON(this.result);
-            if (typeof callback === 'function') {
-                callback(original,fileName);
-            }
-        }
-        reader.readAsText(file);
+        readFileAsJSON(file,callback)
     }
     //支持IE 7 8 9 10
     else if (typeof window.ActiveXObject != 'undefined') {
@@ -47,6 +38,23 @@ function readFile(input, callback) {
     } else {
         alert('error');
     }
+}
+
+/**
+ * 将文件转换为json
+ * @param file 需要处理的文件
+ * @param callback 处理后的回调(json对象，文件名字)
+ */
+function readFileAsJSON(file,callback){
+    const reader = new FileReader();
+    reader.onload = function () {
+        console.log(this.result);
+        const original=toJSON(this.result);
+        if (typeof callback === 'function') {
+            callback(original,file.name);
+        }
+    }
+    reader.readAsText(file);
 }
 
 /**

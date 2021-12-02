@@ -36,3 +36,25 @@
     font-size: 16px;
     width: 100%;
 }
+
+.outer{
+    display: flex;
+    flex-direction: row;
+}
+
+#file_drop{
+    min-height: 100px;
+    box-sizing: border-box;
+    border: 1px solid chartreuse;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+
+#tip{
+    color: darkgray;
+    font-size: 18px;
+    margin-top: 10px;
+    align-self: center;
+}

@@ -2,18 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta version="1.1">
     <title>屎大棒文本自动翻译机</title>
     <script src="../js/jquery1.9.1.min.js"></script>
     <script src="../js/md5.js"></script>
     <script src="../js/fileReader.js"></script>
+    <script src="../js/fileDrop.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/ss.css">
     <style>
     </style>
 </head>
 <body class="container">
 <div>
-    <input type="file" onchange="readFile(this,onGetFile)" class="file_selector" accept=".json"/>
-    <input type="button" value="开始翻译" onclick="doTranslate()" class="trans"/>
+    <div class="outer">
+        <div id="file_drop">
+            <input type="file" onchange="readFile(this,onGetFile)" class="file_selector" accept=".json"/>
+            <div id="tip">可以直接拖拽文件到这里</div>
+        </div>
+        <input type="button" value="开始翻译" onclick="doTranslate()" class="trans"/>
+    </div>
+
     <div id="display1" class="dp1"></div>
     <div id="display2" class="dp2"></div>
     <script>
@@ -22,14 +30,14 @@
         let originalObj = {};
         let queryMap = {};
         let translateRes = {};
-        let fileName=''
+        let fileName = ''
 
-        function onGetFile(jsonObj,f) {
-            fileName=f;
+        function onGetFile(jsonObj, f) {
+            fileName = f;
             originalObj = jsonObj;
             queryMap = sbScriptParser(jsonObj);
             document.getElementById("display1").innerHTML = "<h2>探测到文本:</h2><pre>" + JSON.stringify(queryMap, null, 2) + "</pre>"
-            document.getElementById("display2").innerHTML=''
+            document.getElementById("display2").innerHTML = ''
         }
 
         function doTranslate() {
@@ -79,7 +87,7 @@
         }
 
         function downFile() {
-            let newObj={}
+            let newObj = {}
             if (isArrayFn(translateRes)) {
                 //替换翻译元数据
                 translateRes.forEach(({dst, src}, index) => {
@@ -101,13 +109,20 @@
                 console.log(originalObj)
             }
             const elementA = document.createElement('a');
-            elementA.setAttribute('href', 'data:text/plain;charset=utf-8,' + JSON.stringify(originalObj,null,4));
+            elementA.setAttribute('href', 'data:text/plain;charset=utf-8,' + JSON.stringify(originalObj, null, 4));
             elementA.setAttribute('download', fileName);
             elementA.style.display = 'none';
             document.body.appendChild(elementA);
             elementA.click();
             document.body.removeChild(elementA);
         }
+
+        dropFile("file_drop", function (files) {
+            document.getElementById("tip").innerHTML = files[0].name;
+            readFileAsJSON(files[0], (json, name) => {
+                onGetFile(json, name);
+            });
+        })
     </script>
 </div>
 </body>

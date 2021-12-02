@@ -48,3 +48,6 @@ webstorm可以通过内嵌服务器方式启动，原理懂的都懂:
 # 异常说明
 ![翻译异常](https://img-blog.csdnimg.cn/6590cd3e6e85486ea5e52059c5ac66d7.jpg)
 可能会出现如图的异常**52003**，**请确认你配置的appid和key是否有效**
+
+# change log
+## v1.1 增加拖拽读取文件的功能 at 20211202
